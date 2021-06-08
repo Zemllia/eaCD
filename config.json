@@ -1,4 +1,6 @@
 {
+  "host": "192.168.0.5",
+  "port": 8000,
   "OSType": "W",
   "repositories": [
     {

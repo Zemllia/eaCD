@@ -50,7 +50,7 @@ def start():
             f = open(repository.get("location") + "/EaCi/deploy.bat", "a")
             f.write("cd " + repository.get("location") + "\ngit pull")
             f.close()
-    app.run("192.168.0.5", 8000, debug=True)
+    app.run(data.get("host"), data.get("port"), debug=True)
 
 
 if __name__ == '__main__':
