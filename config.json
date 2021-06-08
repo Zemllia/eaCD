@@ -1,0 +1,9 @@
+{
+  "OSType": "W",
+  "repositories": [
+    {
+      "name": "testRepo",
+      "location": "C:\\Users\\Zemlia\\Documents\\Projects\\testRepo"
+    }
+  ]
+}
