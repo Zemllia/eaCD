@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/new-commit', methods=['POST'])
 def hello():
     request_data = request.get_json()
-    print(request_data)
+    print("Catched update!")
     with open('config.json') as json_file:
         data = json.load(json_file)
     for repository in data['repositories']:
@@ -21,6 +21,7 @@ def hello():
             elif data.get("OSType") == 'W':
                 print(r"" + repository.get("location") + r"/EaCi/")
                 subprocess.call([r"" + repository.get("location") + r"\\EaCi\\deploy.bat"])
+    print("Update finished!")
 
     return 'ok'
 
