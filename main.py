@@ -16,7 +16,8 @@ def hello():
     for repository in data['repositories']:
         if request_data.get("repository").get("name") == repository.get("name"):
             if data.get("OSType") == 'L':
-                os.system("./" + repository.get("location") + "/EaCi/deploy.sh")
+                os.system("." + ("/" if repository.get("location")[0] != "/" else "") + repository.get("location")
+                          + "/EaCi/deploy.sh")
             elif data.get("OSType") == 'W':
                 print(r"" + repository.get("location") + r"/EaCi/")
                 subprocess.call([r"" + repository.get("location") + r"\\EaCi\\deploy.bat"])
