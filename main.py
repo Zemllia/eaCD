@@ -1,3 +1,6 @@
+import hashlib
+import hmac
+
 from flask import Flask, request
 import json
 import os
@@ -11,10 +14,14 @@ app = Flask(__name__)
 def hello():
     request_data = request.get_json()
     print("Catched update!")
+
     with open('config.json') as json_file:
         data = json.load(json_file)
     for repository in data['repositories']:
-        if request_data.get("repository").get("name") == repository.get("name"):
+        if request_data.get("repository").get("name") == repository.get("name") and \
+                (request_data.get("ref") == f"refs/heads/{repository.get('branch')}" or request_data.get("before") == '0000000000000000000000000000000000000000'):
+            if not _validate_signature(request.headers, request.data, repository.get('webhook_secret')):
+                return 'ok'
             if data.get("OSType") == 'L':
                 os.system("sh " + ("/" if repository.get("location")[0] != "/" else "") + repository.get("location")
                           + "/EaCi/deploy.sh")
@@ -24,6 +31,20 @@ def hello():
     print("Update finished!")
 
     return 'ok'
+
+
+def _validate_signature(headers, request_data, secret):
+    signature = headers.get("X-Hub-Signature")
+    if not signature or not signature.startswith("sha1="):
+        return False
+
+    # Create our own signature
+    digest = hmac.new(secret.encode(), request_data, hashlib.sha1).hexdigest()
+
+    # Verify signature
+    if not hmac.compare_digest(signature, "sha1=" + digest):
+        return False
+    return True
 
 
 def start():

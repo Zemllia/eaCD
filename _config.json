@@ -1,0 +1,13 @@
+{
+  "host": "192.168.0.5",
+  "port": 8001,
+  "OSType": "W",
+  "repositories": [
+    {
+      "name": "hack",
+      "branch": "main",
+      "location": "C:\\Users\\Zemlia\\Documents\\Projects\\testRepo",
+      "webhook_secret": "my_secret"
+    }
+  ]
+}
